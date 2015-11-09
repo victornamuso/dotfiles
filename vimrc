@@ -1,4 +1,3 @@
-
 set nocompatible
 "execute pathogen#infect()
 
@@ -128,6 +127,3 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<s-c-j>"
-
-
-
