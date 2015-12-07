@@ -1,0 +1,12 @@
+[user]
+	name = Vic Amuso
+	email = vic@parablesoft.com
+[mergetool "kdiff3"]
+[diff]
+[merge]
+[merge]
+	tool = kdiff3
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
