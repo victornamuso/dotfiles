@@ -28,6 +28,7 @@ Plugin 'wesQ3/vim-windowswap'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
+Plugin 'tmhedberg/matchit'
 call vundle#end()            
 filetype plugin indent on
 
@@ -89,7 +90,7 @@ let g:rspec_command = 'Dispatch zeus rspec {spec}'
 
 map <C-b> :CtrlPBuffer<CR>
 map <C-n> :NERDTreeToggle<CR>
-map <C-m> :NERDTreeFind<CR>
+nmap <C-q> :NERDTreeFind<CR>
 map <C-c> <esc>
 set backspace=2 "make backspace work like most other apps
 
@@ -127,3 +128,4 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<s-c-j>"
+
