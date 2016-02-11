@@ -29,6 +29,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
 Plugin 'tmhedberg/matchit'
+Plugin 'bling/vim-airline'
+Plugin 'rizzatti/dash.vim'
 call vundle#end()            
 filetype plugin indent on
 
@@ -38,8 +40,11 @@ set autoread                           " Read open files again when changed outs
 set number
 let mapleader = ","
 set clipboard=unnamed
-set timeoutlen=300
+" set timeoutlen=300
+set timeout timeoutlen=5000 ttimeoutlen=100
 set regexpengine=1
+set iskeyword+=-
+
 syntax enable
 filetype  indent on
 filetype plugin on
@@ -61,28 +66,33 @@ nnoremap <C-H> <C-W><C-H>
 
 
 "open other files in the current directory
+map <Leader>mm :e %:p:h/
 map <Leader>vs :vsp %:p:h/
 map <Leader>s :split %:p:h/
-map <Leader>ecn :e %:p:h/controller.js<CR>
-map <Leader>ecm :e %:p:h/component.js<CR>
-map <Leader>er :e %:p:h/route.js<CR>
-map <Leader>et :e %:p:h/template.hbs<CR>
-map <Leader>es :e %:p:h/service.js<CR>
-map <Leader>vcn :vsp %:p:h/controller.js<CR>
-map <Leader>vcm :vsp %:p:h/component.js<CR>
-map <Leader>vr :vsp %:p:h/route.js<CR>
-map <Leader>vt :vsp %:p:h/template.hbs<CR>
-map <Leader>vs :vsp %:p:h/service.js<CR>
-map <Leader>scn :spl %:p:h/controller.js<CR>
-map <Leader>scm :spl %:p:h/component.js<CR>
-map <Leader>sr :spl %:p:h/route.js<CR>
-map <Leader>st :spl %:p:h/template.hbs<CR>
-map <Leader>ss :spl %:p:h/service.js<CR>
+" map <Leader>ecn :e %:p:h/controller.js<CR>
+" map <Leader>ecm :e %:p:h/component.js<CR>
+" map <Leader>er :e %:p:h/route.js<CR>
+" map <Leader>et :e %:p:h/template.hbs<CR>
+" map <Leader>es :e %:p:h/service.js<CR>
+" map <Leader>vcn :vsp %:p:h/controller.js<CR>
+" map <Leader>vcm :vsp %:p:h/component.js<CR>
+" map <Leader>vr :vsp %:p:h/route.js<CR>
+" map <Leader>vt :vsp %:p:h/template.hbs<CR>
+" map <Leader>vs :vsp %:p:h/service.js<CR>
+" map <Leader>scn :spl %:p:h/controller.js<CR>
+" map <Leader>scm :spl %:p:h/component.js<CR>
+" map <Leader>sr :spl %:p:h/route.js<CR>
+" map <Leader>st :spl %:p:h/template.hbs<CR>
+" map <Leader>ss :spl %:p:h/service.js<CR>
 
 inoremap <c-s> <Esc>:w<CR>
 nnoremap <c-s> :w<CR>
 vmap <c-s> <esc>:w<CR>gv
 vmap <c-l> :Linediff<CR>
+nmap <leader>gf :CtrlP<CR><C-\>w
+
+map <c-d> :Dash 
+map <Leader>d :Dash!<CR>
 
 map <Leader>tc :call RunNearestSpec()<CR>
 map <Leader>tf :call RunCurrentSpecFile()<CR>
@@ -104,7 +114,7 @@ nnoremap <S-K> :resize +1<CR>
 nnoremap <S-J> :resize -1<CR>
 nnoremap <Leader>tg :IndentGuidesToggle<CR>
 "nnoremap gcc <Plug>CommentaryLine
-let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|bower_components|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
+let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|/public/uploads|bower_components|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
 
 
 let g:user_emmet_complete_tag = 1
@@ -128,4 +138,3 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<s-c-j>"
-
