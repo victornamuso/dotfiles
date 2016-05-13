@@ -1,3 +1,4 @@
+
 set nocompatible
 "execute pathogen#infect()
 
@@ -31,6 +32,10 @@ Plugin 'tpope/vim-surround'
 Plugin 'tmhedberg/matchit'
 Plugin 'bling/vim-airline'
 Plugin 'rizzatti/dash.vim'
+Plugin 'bkad/CamelCaseMotion'
+Plugin 'osyo-manga/vim-over'
+Plugin 'majutsushi/tagbar'
+
 call vundle#end()            
 filetype plugin indent on
 
@@ -69,6 +74,10 @@ nnoremap <C-H> <C-W><C-H>
 map <Leader>mm :e %:p:h/
 map <Leader>vs :vsp %:p:h/
 map <Leader>s :split %:p:h/
+map <Leader>ot :tab split<CR>
+map <Leader>xt :tabc<CR>
+map <Leader>a :Ack<CR>
+
 " map <Leader>ecn :e %:p:h/controller.js<CR>
 " map <Leader>ecm :e %:p:h/component.js<CR>
 " map <Leader>er :e %:p:h/route.js<CR>
@@ -91,12 +100,29 @@ vmap <c-s> <esc>:w<CR>gv
 vmap <c-l> :Linediff<CR>
 nmap <leader>gf :CtrlP<CR><C-\>w
 
-map <c-d> :Dash 
+" map <c-d> :Dash 
 map <Leader>d :Dash!<CR>
 
 map <Leader>tc :call RunNearestSpec()<CR>
 map <Leader>tf :call RunCurrentSpecFile()<CR>
+
+
 let g:rspec_command = 'Dispatch zeus rspec {spec}'
+let g:rspec_runner = "os_x_iterm2"
+
+let g:using_zeus = 1
+
+nnoremap <leader>r :call ToggleRspecCommand()<cr>
+
+function! ToggleRspecCommand()
+	if g:using_zeus
+		let g:rspec_command = 'Dispatch rspec {spec}'
+	else
+		let g:rspec_command = 'Dispatch zeus rspec {spec}'
+	endif
+
+endfunction
+
 
 map <C-b> :CtrlPBuffer<CR>
 map <C-n> :NERDTreeToggle<CR>
@@ -113,9 +139,11 @@ nnoremap <S-Left> :vertical resize -1<CR>
 nnoremap <S-K> :resize +1<CR>
 nnoremap <S-J> :resize -1<CR>
 nnoremap <Leader>tg :IndentGuidesToggle<CR>
+nnoremap <leader>f :!echo -n %:p \| pbcopy<CR><CR>
 "nnoremap gcc <Plug>CommentaryLine
 let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|/public/uploads|bower_components|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
-
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
+nnoremap <leader>. :CtrlPTag<cr>
 
 let g:user_emmet_complete_tag = 1
 let g:user_emmet_mode='i'
@@ -138,3 +166,26 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
 let g:UltiSnipsJumpBackwardTrigger="<s-c-j>"
+map <silent> W <Plug>CamelCaseMotion_w
+map <silent> E <Plug>CamelCaseMotion_e
+map <silent> B <Plug>CamelCaseMotion_b
+nnoremap <C-W>O :call MaximizeToggle()<CR>
+nnoremap <C-W>o :call MaximizeToggle()<CR>
+nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction
