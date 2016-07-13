@@ -1,4 +1,3 @@
-
 set nocompatible
 "execute pathogen#infect()
 
@@ -68,6 +67,7 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nnoremap <Leader>c :ccl<CR>
 
 
 "open other files in the current directory
