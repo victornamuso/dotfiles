@@ -1,0 +1,158 @@
+snippet em-notify
+import Notifyable from "ember-ui-helpers/mixins/notifyable";
+endsnippet
+
+
+snippet deb
+debugger;
+endsnippet
+
+snippet wt
+willTransition: function(transition) {
+$1
+}
+endsnippet
+
+snippet imp-ma
+import { memberAction,collectionAction } from 'ember-api-actions';
+endsnippet
+
+snippet imp-data
+import {
+  attr,
+  hasMany,
+  belongsTo
+} from "ember-computed-decorators/ember-data";
+endsnippet
+snippet imp-comp
+import computed from 'ember-computed-decorators';
+endsnippet
+
+snippet imp-other
+import { $1 } from 'ember-computed-decorators';
+endsnippet
+
+snippet em-con
+import Ember from "ember";
+//import computed from 'ember-computed-decorators';
+//import {  } from 'ember-computed-decorators';
+const {Controller} = Ember;
+export default Controller.extend({
+	$0
+});
+endsnippet
+
+snippet im-api
+import { memberAction, collectionAction } from 'ember-api-actions';
+endsnippet
+
+snippet imValid
+import {ValidationMixin, validate} from "ember-cli-simple-validation/mixins/validate";
+endsnippet
+
+snippet valMix "Validation Mixin" i
+ValidationMixin,
+endsnippet
+
+snippet fn
+function($1){
+$0
+}
+endsnippet
+
+snippet em-comp
+import Ember from "ember";
+
+export default Ember.Component.extend({
+$0
+});
+endsnippet
+
+
+snippet em-al "Ember.computed.alias" 
+$1: Ember.computed.alias("$0"),
+endsnippet
+
+snippet em-alias "Ember.computed.alias" i
+Ember.computed.alias("$0")
+endsnippet
+
+snippet em-act
+actions:{
+  $1($2){
+    $0
+  }
+}
+endsnippet
+
+snippet jsThen "then functions with the fat arrow" i
+.then(() =>{
+	$1
+},
+() =>{
+	$2
+});
+endsnippet
+
+snippet ds-attr
+$1: DS.attr("${2:string}")
+endsnippet
+
+snippet async "Async true on a model" i
+{async: true}
+endsnippet
+
+snippet em-service 
+$1: Ember.inject.service(),
+endsnippet
+
+snippet em-vget
+var $1 = this.get("$1");
+endsnippet
+snippet em-fn
+$1: function($2){
+	$0
+},
+endsnippet
+
+snippet em-route
+import Ember from "ember";
+
+const {RSVP,Route} = Ember;
+
+export default Route.extend({
+model(){
+	return new RSVP.hash({
+		$1
+	});
+}
+});
+endsnippet
+
+snippet em-ctl
+import Ember from "ember";
+const {Controller} = Ember;
+export default Controller.extend({
+$1
+});
+endsnippet
+
+
+snippet em-ent-fact
+name(){return faker.company.companyName();},
+address(){return faker.address.streetAddress();},
+city(){return faker.address.city();},
+state(){return faker.address.stateAbbr();},
+zip(){return faker.address.zipCode();},
+phone(){return faker.phone.phoneNumber();},
+email(){return faker.internet.email();},
+endsnippet
+
+snippet em-ent-model
+address: attr("string"),
+city: attr("string"),
+state: attr("string"),
+zip: attr("string"),
+phone: attr("string"),
+email: attr("string"),
+endsnippet

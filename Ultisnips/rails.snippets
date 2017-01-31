@@ -1,0 +1,235 @@
+snippet CORS
+	after_action :set_access_control_headers
+
+	def set_access_control_headers
+		headers['Access-Control-Allow-Origin'] = "*"
+		headers['Access-Control-Request-Method'] = %w{GET POST PUT PATCH HEAD DELETE OPTIONS}.join(",")
+	end
+endsnippet
+
+snippet write_file
+File.open("$1","w") {|f| f.puts $2}
+endsnippet
+
+# snippet context "rspec: context block"
+# context "$1" do
+#     ${0:${VISUAL:# assertions...}}
+# end
+# endsnippet
+
+snippet spec_con_show
+  describe "#show" do
+    let!(:$1) {create(:$1)}
+    context "logged in" do
+      ${2:login_user}$0
+      before do
+        get :show, id: $1.id, format: "json"
+      end
+      it{expect_status(200)}
+    end
+
+    context "logged out" do
+      it "returns a 401" do
+        get :show, id: $1.id, format: "json"
+        expect_status 401
+      end
+    end
+  end
+endsnippet
+
+snippet spec_con_up
+  describe "#update" do
+    let!(:$1) {create(:$1$2)}
+    let(:update_params) do
+      {"id":"#{$1.id}","attributes":{$3},"type":"$1s"}
+    end
+
+    context "logged in" do
+      ${4:login_user}
+      before do
+        setup_post_put
+        put :update, id: $1.id, data: update_params 
+        $1.reload
+      end
+      it{expect_status(200)}
+      it{expect($1.$5).to eq "$0"}
+    end
+
+    context "logged out" do
+      it "returns a 401" do
+        put :update, id: $1.id, data: update_params, format: "json"
+        expect_status 401
+      end
+    end
+
+  end
+endsnippet
+
+snippet re_spec
+require 'rails_helper'
+RSpec.describe Api::V1::$1Resource do
+  let(:model) {create(:$2)}
+  let(:subject) {Api::V1::$1Resource.new(model,nil)} 
+
+  it{ expect(subject.$3).to eq model.$3 }
+end
+endsnippet
+
+snippet re_temp
+class Api::V1::$1Resource < JSONAPI::Resource
+  attributes $2
+end
+endsnippet
+
+snippet email_spec
+
+context "email" do
+	it{expect_number_of_emails_to_eq $1}
+	it{expect_email_subject_to_eq "$2"}
+	it{expect_email_sender_to_eq "$3"}
+	it{expect_email_recipient_to_eq [$4]}
+end
+endsnippet
+
+snippet vcr-test
+it "$1",vcr:{record: :all} do
+	$2
+end
+endsnippet
+
+snippet vpo
+validates_presence_of :$1
+endsnippet
+
+snippet ror-dd
+${1:,}dependent: :destroy
+endsnippet
+
+snippet smtp-dev
+
+  config.action_mailer.default_url_options = { host: '${1:localhost:4200}' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.asset_host = "http://$1"
+
+  ActionMailer::Base.smtp_settings = {
+   :address              => "127.0.0.1",
+   :port                 => "1025",
+  } 
+endsnippet
+
+snippet smtp-prod
+config.action_mailer.default_url_options = { host: 'localhost:3000' }
+config.action_mailer.delivery_method = :smtp
+
+ActionMailer::Base.smtp_settings = {  
+  :address              => "smtp.sendgrid.net",  
+  :port                 => "25",
+  :domain               => "",  
+  :user_name            => "",  
+  :password             => "",  
+  :authentication       => "plain",  
+  :enable_starttls_auto => true  
+}
+endsnippet
+
+
+snippet svpo
+it{is_expected.to validate_presence_of :$1}
+endsnippet
+
+snippet sbt
+it{is_expected.to belong_to :$1}
+endsnippet
+
+
+snippet shm
+it{is_expected.to have_many :$1}
+endsnippet
+
+snippet srt
+it{is_expected.to respond_to :$1}
+endsnippet
+
+snippet spec_assoc
+context "associations" do
+  $1
+end
+endsnippet
+snippet spec_prop
+describe "properties" do
+  it{is_expected.to respond_to :$1}
+end
+endsnippet
+
+snippet spec_val
+describe "validations" do
+  $1
+end
+endsnippet
+
+snippet re-filter
+filter :$1, apply: ->(records,value,_options){
+  $2
+}
+endsnippet
+
+snippet concern
+module $1
+  extend ActiveSupport::Concern
+end
+endsnippet
+
+
+snippet re-spec-entity
+  it{ expect(subject.name).to eq contact.name}
+  it{ expect(subject.email).to eq contact.email}
+  it{ expect(subject.phone).to eq contact.phone}
+  it{ expect(subject.address).to eq contact.address}
+  it{ expect(subject.city).to eq contact.city}
+  it{ expect(subject.state).to eq contact.state}
+  it{ expect(subject.zip).to eq contact.zip}
+endsnippet
+
+snippet re_up_flds
+def self.updatable_fields(context)
+  # super - [:field]
+  $1
+end
+endsnippet
+
+snippet re_cre_flds
+def self.creatable_fields(context)
+  # super - [:field]
+  $1
+end
+endsnippet
+
+snippet s_up_flds
+describe "updatable_fields" do
+  it "allows the right fields to be posted in an update" do
+    fields = [$1]
+    expect(Api::V1::$2Resource.updatable_fields(nil)).to match_array fields
+  end
+end
+endsnippet
+
+snippet s_cre_flds
+describe "creatable fields" do
+  it "allows the right fields to be posted in a create" do
+    fields = [$1]
+    expect(Api::V1::$2Resource.creatable_fields(nil)).to match_array fields
+  end
+end
+endsnippet
+
+snippet bb
+byebug
+endsnippet
+
+snippet spec_soft_delete
+context "soft delete" do
+  subject {create(:$1)}
+  it{expect{subject.destroy}.to change{$2.only_deleted.count}.by(1)}
+  #it{expect{subject.destroy}.to change{$3.only_deleted.count}.by($4)}
+end
+endsnippet
