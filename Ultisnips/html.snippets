@@ -158,3 +158,19 @@ snippet link-to-bl
 		$2
 	{{/link-to}}
 endsnippet
+
+snippet bs-modal
+
+{{#bs-modal onHide=(action "cancel") as |modal|}}
+  {{#modal.header}}<h4>$2</h4>{{/modal.header}}
+  {{#modal.body}}
+    $0
+  {{/modal.body}}
+  {{#modal.footer}}
+    <div class="text-right">
+      <button class="btn btn-modal" {{action '$3'}}>$4</button>
+      or {{link-to "cancel" "$5"}}
+    </div>
+  {{/modal.footer}}
+{{/bs-modal}}
+endsnippet

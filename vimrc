@@ -35,13 +35,18 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'osyo-manga/vim-over'
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'AndrewRadev/splitjoin.vim'
+Plugin 'kana/vim-textobj-user.git'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 
 call vundle#end()            
 
 
 if has ("autocmd")
-  filetype indent on
+  filetype indent plugin on
+  " filetype indent on
 endif
+runtime macros/matchit.vim
 
 
 
@@ -84,15 +89,21 @@ set cursorline
 iabbrev rpry require 'pry'; binding.remote_pry;
 
 "split navigation
+" inoremap <esc>   <NOP>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <Leader>c :ccl<CR>
+nnoremap <Leader>u :UltiSnipsEdit<CR>
 nnoremap <Leader>sc :%! slackcat -c 
 nnoremap <Leader>rn :set relativenumber<CR>
 nnoremap <Leader>n :set number<CR>
-" map <Leader>i gg=G``<CR>
+nnoremap <Leader>rs :Eunittest<CR>
+nnoremap <Leader>rrs :Vunittest<CR>
+nnoremap <Leader>rm :Emodel<CR>
+nnoremap <Leader>rrm :Vmodel<CR>
+inoremap jj <ESC>
 map <C-i> mzgg=G``zz
 "open other files in the current directory
 map <Leader>mm :e %:p:h/
@@ -101,29 +112,32 @@ map <Leader>s :split %:p:h/
 map <Leader>ot :tab split<CR>
 map <Leader>xt :tabc<CR>
 map <Leader>a :Ack<CR>
+map <Leader>w <ESC>:x<CR>
 
 map <Leader>ec :e %:p:h/controller.js<CR>
-map <Leader>emc :e %:p:h/component.js<CR>
+map <Leader>ej :e %:p:h/component.js<CR>
 map <Leader>er :e %:p:h/route.js<CR>
 map <Leader>et :e %:p:h/template.hbs<CR>
 map <Leader>es :e %:p:h/service.js<CR>
-" map <Leader>vcn :vsp %:p:h/controller.js<CR>
-" map <Leader>vcm :vsp %:p:h/component.js<CR>
-" map <Leader>vr :vsp %:p:h/route.js<CR>
-" map <Leader>vt :vsp %:p:h/template.hbs<CR>
-" map <Leader>vs :vsp %:p:h/service.js<CR>
-" map <Leader>scn :spl %:p:h/controller.js<CR>
-" map <Leader>scm :spl %:p:h/component.js<CR>
-" map <Leader>sr :spl %:p:h/route.js<CR>
-" map <Leader>st :spl %:p:h/template.hbs<CR>
-" map <Leader>ss :spl %:p:h/service.js<CR>
+map <Leader>em :e %:p:h/model.js<CR>
+map <leader>n :vsplit ~/Desktop/vim_tasks.md<CR>:vertical resize 60<CR><c-W>rG
+map <leader>q :x<CR>
+
+
+map <Leader>vec :vsplit %:p:h/controller.js<CR>
+map <Leader>vej :vsplit %:p:h/component.js<CR>
+map <Leader>ver :vsplit %:p:h/route.js<CR>
+map <Leader>vet :vsplit %:p:h/template.hbs<CR>
+map <Leader>ves :vsplit %:p:h/service.js<CR>
+map <Leader>vem :vsplit %:p:h/model.js<CR>
+
 
 inoremap <c-s> <Esc>:w<CR>
 nnoremap <c-s> :w<CR>
 vmap <c-s> <esc>:w<CR>gv
 vmap <c-l> :Linediff<CR>
 nmap <leader>gf :CtrlP<CR><C-\>w
-nmap <leader>v :e ~/.vimrc<CR>
+nmap <leader>v :vsplit ~/.vimrc<CR>
 
 " map <c-d> :Dash 
 map <Leader>d :Dash!<CR>
@@ -137,7 +151,60 @@ let g:rspec_runner = "os_x_iterm2"
 
 let g:using_zeus = 1
 
-nnoremap <leader>r :call ToggleRspecCommand()<cr>
+nnoremap <leader>r :call ToggleRspecCommand()<CR>
+map <leader>mm :call EmberAlternate()<CR>
+map <leader>xr :call EmberAlternate("r")<CR>
+map <leader>xm :call EmberAlternate("m")<CR>
+map <leader>xc :call EmberAlternate("c")<CR>
+map <silent><leader>xt :call EmberAlternate("t")<CR>
+map <leader>xa :call EmberAlternate("a")<CR>
+map <leader>xs :call EmberAlternate("s")<CR>
+
+function! EmberAlternate(f,...)
+  let tokens = split(expand("%"),"/")
+  let file_name = tokens[-1]
+  let directory = expand("%:p:h")
+  let new_file = expand("%:p")
+
+  if tokens[2] == "components"
+    if file_name == "component.js"
+      let new_file_name = fnamemodify('template.hbs', new_file)
+    else
+      let new_file_name = fnamemodify('component.js', new_file)
+    endif
+
+    let switch_name = directory . "/" . new_file_name
+    execute "vsplit " . switch_name
+  else
+    let file = a:f
+    if file == "r"
+      let new_file_name_base = "route.js"
+    elseif file == "c"
+      let new_file_name_base = "controller.js"
+    elseif file == "t"
+      let new_file_name_base = "template.hbs"
+    elseif file == "m"
+      let new_file_name_base "model.js"
+    elseif file == "a" 
+      let new_file_name_base = "adapter.js"
+    elseif file == "s" 
+      let new_file_name_base = "service.js"
+    else
+      echo "Invalid file type"
+      return
+    endif
+
+      let x = fnamemodify(new_file_name_base,new_file)
+      echo x
+      let switch_name = directory . "/" . x
+      execute "vsplit " . switch_name
+
+      if new_file_name_base == "template.hbs"
+	 silent :SyntasticToggleMode
+      endif
+  end
+  
+endfunction
 
 function! ToggleRspecCommand()
   if g:using_zeus
