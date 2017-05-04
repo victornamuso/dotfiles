@@ -152,21 +152,24 @@ let g:rspec_runner = "os_x_iterm2"
 let g:using_zeus = 1
 
 nnoremap <leader>r :call ToggleRspecCommand()<CR>
-map <leader>mm :call EmberAlternate()<CR>
+
+nnoremap <leader>mn :call EmberAlternate()<CR>
+nnoremap <leader>mm :call EmberAlternate(input('Param: '))<CR>
 map <leader>xr :call EmberAlternate("r")<CR>
 map <leader>xm :call EmberAlternate("m")<CR>
 map <leader>xc :call EmberAlternate("c")<CR>
-map <silent><leader>xt :call EmberAlternate("t")<CR>
+map <leader>xt :call EmberAlternate("t")<CR>
 map <leader>xa :call EmberAlternate("a")<CR>
 map <leader>xs :call EmberAlternate("s")<CR>
 
-function! EmberAlternate(f,...)
+function! EmberAlternate(...)
   let tokens = split(expand("%"),"/")
   let file_name = tokens[-1]
   let directory = expand("%:p:h")
   let new_file = expand("%:p")
 
-  if tokens[2] == "components"
+  let components_token = index(tokens,"components")
+  if components_token != -1
     if file_name == "component.js"
       let new_file_name = fnamemodify('template.hbs', new_file)
     else
@@ -176,7 +179,7 @@ function! EmberAlternate(f,...)
     let switch_name = directory . "/" . new_file_name
     execute "vsplit " . switch_name
   else
-    let file = a:f
+    let file = a:000[0]
     if file == "r"
       let new_file_name_base = "route.js"
     elseif file == "c"
@@ -238,7 +241,7 @@ nnoremap <S-J> :resize -1<CR>
 nnoremap <Leader>tg :IndentGuidesToggle<CR>
 nnoremap <leader>f :!echo -n %:p \| pbcopy<CR><CR>
 "nnoremap gcc <Plug>CommentaryLine
-let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|/public/uploads|bower_components|node_modules|(\.(swp|git|bak|pyc|DS_Store))$'
+let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|/public/uploads|bower_components|node_modules|deps|_build|(\.(swp|git|bak|pyc|DS_Store))$'
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 nnoremap <leader>. :CtrlPTag<cr>
 
