@@ -2,6 +2,17 @@ snippet hb "Handlebars snippet" i
 {{$0}}
 endsnippet
 
+snippet lw
+{{#list-wrapper collection=$1 as |lw|}}
+  {{#lw.body}}
+    $2
+  {{/lw.body}}
+  {{#lw.empty}}
+    $3
+  {{/lw.empty}}
+{{/list-wrapper}}
+endsnippet
+
 snippet selectize
 <!-- https://github.com/miguelcobain/ember-cli-selectize -->
 {{ember-selectize
@@ -173,4 +184,13 @@ snippet bs-modal
     </div>
   {{/modal.footer}}
 {{/bs-modal}}
+endsnippet
+
+snippet em-selectize
+{{ember-selectize
+content="$1"
+optionValuePath="content.$2"
+optionLabelPath="content.$3"
+selection=$4
+}}
 endsnippet

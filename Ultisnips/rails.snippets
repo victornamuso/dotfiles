@@ -12,6 +12,12 @@ File.open("$1","w") {|f| f.puts $2}
 endsnippet
 
 
+snippet new_rails_spec
+require "rails_helper"
+RSpec.describe $0 do
+end
+endsnippet
+
 # snippet context "rspec: context block"
 # context "$1" do
 #     ${0:${VISUAL:# assertions...}}
@@ -75,6 +81,11 @@ RSpec.describe Api::V1::$1Resource do
   it{ expect(subject.$3).to eq model.$3 }
 end
 endsnippet
+
+snippet re_spec_field
+it{ expect(subject.$1).to eq model.$1 }
+endsnippet
+
 
 snippet re_temp
 class Api::V1::$1Resource < JSONAPI::Resource

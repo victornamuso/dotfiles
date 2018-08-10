@@ -1,3 +1,4 @@
+
 set nocompatible
 "execute pathogen#infect()
 
@@ -38,6 +39,10 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'kana/vim-textobj-user.git'
 Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'mtth/scratch.vim'
+Plugin 'joukevandermaas/vim-ember-hbs'
+Plugin 'mxw/vim-jsx'
 
 call vundle#end()            
 
@@ -49,12 +54,13 @@ endif
 runtime macros/matchit.vim
 
 
-
 filetype plugin indent on
 
 "general vim settings
+set novisualbell
 set autoindent                         " Copy indent from current line
 set autoread                           " Read open files again when changed outside Vim
+set expandtab
 set number
 let mapleader = ","
 set clipboard=unnamed
@@ -66,7 +72,7 @@ set iskeyword+=-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
+let coffee_indent_keep_current = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -77,19 +83,19 @@ syntax enable
 filetype  indent on
 filetype plugin on
 " set tabstop=2 shiftwidth=2 softtabstop=2
+set tabstop=2
 set shiftwidth=2
+
 set incsearch                          " Do incremental searching
 set noswapfile 
 set noerrorbells                       " Don't beep
 "set nowrap 
-set visualbell 
 set cursorline
 
 
 iabbrev rpry require 'pry'; binding.remote_pry;
 
 "split navigation
-" inoremap <esc>   <NOP>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -103,14 +109,27 @@ nnoremap <Leader>rs :Eunittest<CR>
 nnoremap <Leader>rrs :Vunittest<CR>
 nnoremap <Leader>rm :Emodel<CR>
 nnoremap <Leader>rrm :Vmodel<CR>
-inoremap jj <ESC>
+nnoremap <Leader>l :RV<CR>
+nnoremap <Leader>2 <C-]>zz
+
+"inoremap <esc> <nop>
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+nmap <Left> <<
+nmap <Right> >>
+vmap <Left> <gv
+vmap <Right> >gv
+
+inoremap jk <ESC>
 map <C-i> mzgg=G``zz
 "open other files in the current directory
 map <Leader>mm :e %:p:h/
 map <Leader>vs :vsp %:p:h/
 map <Leader>s :split %:p:h/
 map <Leader>ot :tab split<CR>
-map <Leader>xt :tabc<CR>
+map <Leader>xxt :tabc<CR>
 map <Leader>a :Ack<CR>
 map <Leader>w <ESC>:x<CR>
 
@@ -138,6 +157,7 @@ vmap <c-s> <esc>:w<CR>gv
 vmap <c-l> :Linediff<CR>
 nmap <leader>gf :CtrlP<CR><C-\>w
 nmap <leader>v :vsplit ~/.vimrc<CR>
+nmap <leader>sv :vsplit<CR>
 
 " map <c-d> :Dash 
 map <Leader>d :Dash!<CR>
@@ -149,9 +169,11 @@ map <Leader>tf :call RunCurrentSpecFile()<CR>
 let g:rspec_command = 'Dispatch bin/rspec {spec}'
 let g:rspec_runner = "os_x_iterm2"
 
-let g:using_zeus = 1
+let g:rspec_mode = "spring"
 
-nnoremap <leader>r :call ToggleRspecCommand()<CR>
+nnoremap <leader>s :call SetRspecForSpring()<CR>
+nnoremap <leader>g :call SetRspecForGem()<CR>
+nnoremap <leader>z :call SetRspecForZeus()<CR>
 
 nnoremap <leader>mn :call EmberAlternate()<CR>
 nnoremap <leader>mm :call EmberAlternate(input('Param: '))<CR>
@@ -209,15 +231,17 @@ function! EmberAlternate(...)
   
 endfunction
 
-function! ToggleRspecCommand()
-  if g:using_zeus
-    let g:rspec_command = 'Dispatch rspec {spec}'
-  else
-    let g:rspec_command = 'Dispatch zeus rake rspec {spec}'
-  endif
-
+function! SetRspecForSpring()
+    let g:rspec_command = 'Dispatch bin/rspec {spec}'
 endfunction
 
+function! SetRspecForGem()
+    let g:rspec_command = 'Dispatch rspec {spec}'
+endfunction
+
+function! SetRspecForZeus()
+  let g:rspec_command = 'Dispatch zeus rspec {spec}'
+endfunction
 
 map <C-b> :CtrlPBuffer<CR>
 map <C-n> :call ToggleNERDTree()<CR>
@@ -230,10 +254,10 @@ nmap <C-q> :NERDTreeFind<CR>
 map <C-c> <esc>
 set backspace=2 "make backspace work like most other apps
 
-let g:mustache_abbreviations = 1
-if has("autocmd")
-  au BufNewFile,BufRead *.{mustache,handlebars,hbs}{,.erb} set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
-endif
+" let g:mustache_abbreviations = 1
+" if has("autocmd")
+"   au BufNewFile,BufRead *.{mustache,handlebars,hbs}{,.erb} set filetype=html syntax=mustache | runtime! ftplugin/mustache.vim ftplugin/mustache*.vim ftplugin/mustache/*.vim
+" endif
 nnoremap <S-Right> :vertical resize +1<CR>
 nnoremap <S-Left> :vertical resize -1<CR>
 nnoremap <S-K> :resize +1<CR>
@@ -271,6 +295,7 @@ map <silent> B <Plug>CamelCaseMotion_b
 nnoremap <C-W>O :call MaximizeToggle()<CR>
 nnoremap <C-W>o :call MaximizeToggle()<CR>
 nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+imap <C-z><C-z> <C-c>zza
 
 
 function! MaximizeToggle()
@@ -295,3 +320,7 @@ let g:ctrlp_cmd = 'let g:ctrlp_newcache = 1 <bar> CtrlP'
 let g:ctrlp_prompt_mappings = {
       \'PrtClearCache()': ['<c-z>'],
       \}
+
+
+let g:scratch_autohide = &hidden
+let g:scratch_insert_autohide = 1
