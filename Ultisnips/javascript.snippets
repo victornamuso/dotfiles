@@ -161,3 +161,70 @@ test("$1",function(assert){
   $0
 });
 endsnippet
+
+
+snippet new-em-comp
+import Component from "@ember/component";
+//import {$1} from "ember-decorators/object";
+//import {$2} from "ember-decorators/object/computed";
+import {classNames$3} from "ember-decorators/component";
+
+@classNames("$4")
+export default class extends Component{
+$5
+}
+
+endsnippet
+
+
+
+snippet new-em-con
+import Controller from "@ember/controller";
+//import {$1} from "ember-decorators/object";
+//import {$2} from "ember-decorators/object/computed";
+
+export default class extends Controller{
+$3
+}
+
+endsnippet
+
+snippet imp-dec-obj
+import {action} from "ember-decorators/object"
+endsnippet
+
+snippet set-cont
+setupController(controller,model){
+  this._super(controller, model);
+  controller.setProperties({
+    $1: $2
+  });
+}
+endsnippet
+
+snippet r-comp
+import React, {Component} from 'react';
+
+
+export default class $1 extends Component {
+  render(){
+    return (
+	$2
+	)
+  }
+}
+endsnippet
+snippet r-mount
+import React from 'react'
+import ReactDOM from 'react-dom'
+import $2 from './$3'
+
+export const $1 = {
+  mount = (mountElement) => {
+    ReactDOM.render(
+      <$2/>,
+      mountElement
+    )
+  }
+};
+endsnippet

@@ -245,3 +245,37 @@ context "soft delete" do
   #it{expect{subject.destroy}.to change{$3.only_deleted.count}.by($4)}
 end
 endsnippet
+
+snippet api_action_spec
+
+    let(:model) {create($1)}
+    before {setup_post_put}
+
+    def $2
+      put :$2, params: {id: model.id}
+    end
+
+    it{expects_roles_to_have_permission(:$2,[:$3])}
+    it{expects_roles_not_to_have_permission(:$2,[:$4])}
+endsnippet
+
+snippet spec_perm
+    it{expects_roles_to_have_permission(:$1,[:$2])}
+    it{expects_roles_not_to_have_permission(:$1,[:$3])}
+endsnippet
+snippet controller_perm
+
+  #self.permitted_roles = {admin: [:index], dealer: [:update]}
+  #before_action :check_authorization!, only: [:index,:update]
+endsnippet
+
+snippet controller_index_results
+
+context "results returned" do
+  before do
+    create_list(:$1, 3)
+  end
+  login(:$2_user)
+  it{expect_index_records_returned(3)}
+  end
+endsnippet
