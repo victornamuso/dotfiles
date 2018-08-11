@@ -1,0 +1,17 @@
+windows:
+  - name: trrn-back_end
+    root: ~/projects/trrn/candid_back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+      - bundle exec guard start
+  - name: mg-front-end
+    root: ~/projects/trrn/trrn-front-end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - ember s

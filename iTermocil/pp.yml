@@ -1,0 +1,10 @@
+windows:
+  - name: pro_plan
+    root: ~/projects/woofgang/pro_plan
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - node_modules/.bin/webpack-dev-server --config config/webpack.config.js
+      - rails c

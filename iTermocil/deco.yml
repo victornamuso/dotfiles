@@ -1,0 +1,17 @@
+windows:
+  - name: deco-back_end
+    root: ~/projects/deco_flash/v2/back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+      - bundle exec guard start
+  - name: deco-front-end
+    root: ~/projects/deco_flash/v2/front-end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - nvm use && ember s

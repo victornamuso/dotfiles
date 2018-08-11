@@ -1,0 +1,17 @@
+windows:
+  - name: tmd-back_end
+    root: ~/projects/tmd/v1/tmd_back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+      - bundle exec guard start
+  - name: tmd-front-end
+    root: ~/projects/tmd/v1/TmdFrontEnd
+    layout: tiled
+    panes:
+      - vim
+      - nvm use && git status 
+      - nvm use && ember s

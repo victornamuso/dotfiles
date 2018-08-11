@@ -1,0 +1,16 @@
+windows:
+  - name: kls-back-end
+    root: ~/projects/kls/candid_back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+  - name: kls-front-end
+    root: ~/projects/kls/ifu-front-end
+    layout: tiled
+    panes:
+      - nvm use && vim
+      - nvm use && git status 
+      - nvm use && ember s

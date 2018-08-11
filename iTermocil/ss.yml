@@ -1,0 +1,17 @@
+windows:
+  - name: s-and-s-back_end
+    root: ~/projects/s-and-s/back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+      - bundle exec guard start
+  - name: s-and-s-front-end
+    root: ~/projects/s-and-s/front-end
+    layout: tiled
+    panes:
+      - nvm use && vim
+      - nvm use && git status 
+      - nvm use && ember s

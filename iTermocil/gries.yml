@@ -1,0 +1,17 @@
+windows:
+  - name: gries-back_end
+    root: ~/projects/gries/back_end
+    layout: tiled
+    panes:
+      - vim
+      - git status 
+      - bin/rails s
+      - bin/rails c
+      - bundle exec guard start
+  - name: gries-front-end
+    root: ~/projects/gries/front-end
+    layout: tiled
+    panes:
+      - nvm use && vim
+      - nvm use && git status 
+      - nvm use && ember s
