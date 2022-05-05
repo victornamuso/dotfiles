@@ -15,13 +15,10 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-commentary'
 Plugin 'mileszs/ack.vim'
-" Plugin 'kchmck/vim-coffee-script'
-" Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-endwise'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'tpope/vim-dispatch'
-" Plugin 'gregsexton/MatchTag'
 Plugin 'AndrewRadev/linediff.vim'
 Plugin 'wesQ3/vim-windowswap'
 Plugin 'SirVer/ultisnips'
@@ -32,18 +29,22 @@ Plugin 'bling/vim-airline'
 Plugin 'rizzatti/dash.vim'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'osyo-manga/vim-over'
-"Plugin 'majutsushi/tagbar'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'AndrewRadev/splitjoin.vim'
 Plugin 'kana/vim-textobj-user.git'
 Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'mtth/scratch.vim'
-" Plugin 'joukevandermaas/vim-ember-hbs'
-Plugin 'mxw/vim-jsx'
 Plugin 'vim-scripts/genutils'
 Plugin 'albfan/vim-breakpts'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'joukevandermaas/vim-ember-hbs'
+
+
+"Plugin 'mxw/vim-jsx'
+" Plugin 'kchmck/vim-coffee-script'
+" Plugin 'mustache/vim-mustache-handlebars'
+" Plugin 'gregsexton/MatchTag'
+"Plugin 'majutsushi/tagbar'
 
 call vundle#end()            
 
@@ -88,9 +89,7 @@ let g:rspec_command = 'Dispatch rspec {spec}'
 let g:rspec_runner = "os_x_iterm2"
 let g:rspec_mode = "spring"
 let g:ctrlp_custom_ignore = '\v[\/](transpiled)|/dist/|tmp|tags|/public/uploads|bower_components|node_modules|deps|_build|(\.(swp|git|bak|pyc|DS_Store))$'
-let g:user_emmet_complete_tag = 1
-let g:user_emmet_mode='i'
-let g:user_emmet_leader_key='<C-Z>'
+
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
@@ -106,6 +105,11 @@ let g:ycm_filetype_blacklist = {
       \ 'dbext' : 1
       \}
 
+
+"old emmet settings
+let g:user_emmet_complete_tag = 1
+let g:user_emmet_mode='i'
+let g:user_emmet_leader_key='<C-Z>'
 
 
 set backspace=2 "make backspace work like most other apps
@@ -124,15 +128,18 @@ noremap <Right> <Nop>
 nnoremap <C-W>O :call MaximizeToggle()<CR>
 nnoremap <C-W>o :call MaximizeToggle()<CR>
 nnoremap <C-W><C-O> :call MaximizeToggle()<CR>
+
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <c-s> :w<CR>
+
 nnoremap <S-Right> :vertical resize +1<CR>
 nnoremap <S-Left> :vertical resize -1<CR>
 nnoremap <S-K> :resize +1<CR>
 nnoremap <S-J> :resize -1<CR>
+
 nnoremap <silent> <Leader>b :TagbarToggle<CR>
 nnoremap <Leader>tg :IndentGuidesToggle<CR>
 nnoremap <leader>f :!echo -n %:p \| pbcopy<CR><CR>
@@ -174,10 +181,12 @@ nmap <Right> >>
 map <silent> W <Plug>CamelCaseMotion_w
 map <silent> E <Plug>CamelCaseMotion_e
 map <silent> B <Plug>CamelCaseMotion_b
+
 map <C-i> mzgg=G``zz
 map <C-c> <esc>
 map <C-b> :CtrlPBuffer<CR>
 map <C-n> :call ToggleNERDTree()<CR>
+
 map <leader>l :<C-u>%s/,/,\r/g<CR>
 map <Leader>d :Dash!<CR>
 map <Leader>tc :call RunNearestSpec()<CR>
